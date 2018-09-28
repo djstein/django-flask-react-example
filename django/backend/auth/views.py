@@ -5,11 +5,17 @@ from django.http import JsonResponse
 
 
 def users(request, *args, **kwargs):
+    import ipdb
+
+    ipdb.set_trace()
     data = {}
     model = get_user_model()
     resource = kwargs.get("id", None)
     body = json.loads(request.body) if request.body else None
     status = 200
+
+    query_dict = getattr(request, request.method, None)
+
     if request.method == "GET":
         queryset = (
             model.objects.filter(pk=resource) if resource else model.objects.all()
